@@ -9,6 +9,11 @@ import sys
 import get_pip
 
 def install(package):
+    """
+    Installs a given package using pip.
+    
+    :param package: The name of the package to install.
+    """
     subprocess.call([sys.executable, "-m", "pip", "install", package])
 
 try:
@@ -59,6 +64,13 @@ turn = "w"
 
 
 def menu_screen(win, name):
+    """
+    Displays the main menu screen and attempts to connect to the server.
+    
+    :param win: The game window surface.
+    :param name: The player's name.
+    """
+    
     global bo, chessbg
     run = True
     offline = False
@@ -92,6 +104,17 @@ def menu_screen(win, name):
 
     
 def redraw_gameWindow(win, bo, p1, p2, color, ready):
+    """
+    Redraws the game window with the current board state, timers, and UI elements.
+    
+    :param win: The game window surface.
+    :param bo: The board object representing the game state.
+    :param p1: Time remaining for player 1 in seconds.
+    :param p2: Time remaining for player 2 in seconds.
+    :param color: The player's color ('w' for white, 'b' for black, 's' for spectator).
+    :param ready: Whether both players are ready.
+    """
+    
     win.blit(board, (0, 0))
     bo.draw(win, color)
 
@@ -146,6 +169,13 @@ def redraw_gameWindow(win, bo, p1, p2, color, ready):
 
 
 def end_screen(win, text):
+    """
+    Displays the end screen with the given text message.
+    
+    :param win: The game window surface.
+    :param text: The message to display (e.g., winner announcement).
+    """
+    
     pygame.font.init()
     font = pygame.font.SysFont("comicsans", 80)
     txt = font.render(text,1, (255,0,0))
@@ -169,8 +199,12 @@ def end_screen(win, text):
 
 def click(pos):
     """
-    :return: pos (x, y) in range 0-7 0-7
+    Converts screen coordinates to board indices.
+    
+    :param pos: The (x, y) screen position of the mouse click.
+    :return: A tuple (i, j) representing board indices (0-7) or (-1, -1) if outside the board.
     """
+    
     x = pos[0]
     y = pos[1]
     if rect[0] < x < rect[0] + rect[2]:
@@ -185,12 +219,22 @@ def click(pos):
 
 
 def connect():
+    """
+    Establishes a network connection and retrieves the game board.
+    
+    :return: The board object received from the server.
+    """
+    
     global n
     n = Network()
     return n.board
 
 
 def main():
+    """
+    The main game loop that handles game state updates, user input, and rendering.
+    """
+
     global turn, bo, name
 
     color = bo.start_user
