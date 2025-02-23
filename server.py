@@ -32,6 +32,11 @@ spectartor_ids = []
 specs = 0
 
 def read_specs():
+    """
+    Reads the spectator IDs from the specs.txt file and stores them in the global list `spectartor_ids`.
+    If the file does not exist, it creates a new one.
+    """
+    
     global spectartor_ids
 
     spectartor_ids = []
@@ -45,6 +50,14 @@ def read_specs():
 
 
 def threaded_client(conn, game, spec=False):
+    """
+    Handles communication with a client (player or spectator) in a separate thread.
+    
+    :param conn: The connection object representing the client connection.
+    :param game: The game ID associated with the game the client is joining.
+    :param spec: A boolean flag indicating whether the client is a spectator (True) or a player (False).
+    """
+    
     global pos, games, currentId, connections, specs
 
     if not spec:
