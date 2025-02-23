@@ -6,7 +6,12 @@ BUFFER_SIZE = 4096 * 8
 TIMEOUT_SECONDS = 5
 
 class Network:
-    def __init__(self):
+    def __init__(self):'
+        """
+        Initializes the Network object, creates a socket connection to the server,
+        and retrieves the initial game board state.
+        """
+
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = "localhost"
         self.port = 5555
@@ -15,17 +20,31 @@ class Network:
         self.board = pickle.loads(self.board)
 
     def connect(self):
+        """
+        Establishes a connection to the server and retrieves the initial game state.
+        
+        :return: The response from the server containing the initial board state.
+        """
+        
         self.client.connect(self.addr)
         return self.client.recv(BUFFER_SIZE)
 
     def disconnect(self):
+        """
+        Closes the connection to the server.
+        """
+        
         self.client.close()
 
     def send(self, data, pick=False):
         """
-        :param data: str
-        :return: str
+        Sends data to the server and waits for a response. The data can be pickled or plain string.
+        
+        :param data: The data to send to the server, either as a string or an object to pickle.
+        :param pick: A flag to indicate whether the data should be pickled before sending. Default is False.
+        :return: The response received from the server.
         """
+        
         start_time = time.time()
         while time.time() - start_time < TIMEOUT_SECONDS:
             try:
