@@ -4,6 +4,10 @@ from board import Board
 import pickle
 import time
 
+MAX_CONNECTIONS = 6
+GAME_TIME_LIMIT = 900
+BUFFER_SIZE = 8192 *3
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 server = "localhost"
@@ -69,7 +73,7 @@ def threaded_client(conn, game, spec=False):
                 break
 
             try:
-                d = conn.recv(8192 * 3)
+                d = conn.recv(BUFFER_SIZE)
                 data = d.decode("utf-8")
                 if not d:
                     break
@@ -98,16 +102,13 @@ def threaded_client(conn, game, spec=False):
                         elif currentId == "w":
                             bo.p1Name = name
 
-                    #print("Recieved board from", currentId, "in game", game)
-
                     if bo.ready:
                         if bo.turn == "w":
-                            bo.time1 = 900 - (time.time() - bo.startTime) - bo.storedTime1
+                            bo.time1 = GAME_TIME_LIMIT - (time.time() - bo.startTime) - bo.storedTime1
                         else:
-                            bo.time2 = 900 - (time.time() - bo.startTime) - bo.storedTime2
+                            bo.time2 = GAME_TIME_LIMIT - (time.time() - bo.startTime) - bo.storedTime2
 
                     sendData = pickle.dumps(bo)
-                    #print("Sending board to player", currentId, "in game", game)
 
                 conn.sendall(sendData)
 
@@ -169,7 +170,7 @@ def threaded_client(conn, game, spec=False):
 
 while True:
     read_specs()
-    if connections < 6:
+    if connections < MAX_CONNECTIONS:
         conn, addr = s.accept()
         spec = False
         g = -1
