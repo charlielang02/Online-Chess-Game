@@ -7,9 +7,15 @@ from piece import Knight
 import time
 import pygame
 
+MAX_TIME = 900
+BOARD_DIMENSION = 8
+X_COORDINATE = 113
+Y_COORDINATE = 113
+BOARD_WIDTH = 525
+BOARD_HEIGHT = 525
 
 class Board:
-    rect = (113, 113, 525, 525)
+    rect = (X_COORDINATE,Y_COORDINATE,BOARD_WIDTH,BOARD_HEIGHT)
     startX = rect[0]
     startY = rect[1]
     def __init__(self, rows, cols):
@@ -22,7 +28,7 @@ class Board:
 
         self.copy = True
 
-        self.board = [[0 for x in range(8)] for _ in range(rows)]
+        self.board = [[0 for x in range(BOARD_DIMENSION)] for _ in range(rows)]
 
         self.board[0][0] = Rook(0, 0, "b")
         self.board[0][1] = Knight(0, 1, "b")
@@ -65,8 +71,8 @@ class Board:
 
         self.turn = "w"
 
-        self.time1 = 900
-        self.time2 = 900
+        self.time1 = MAX_TIME
+        self.time2 = MAX_TIME
 
         self.storedTime1 = 0
         self.storedTime2 = 0
@@ -86,11 +92,11 @@ class Board:
             y, x = self.last[0]
             y1, x1 = self.last[1]
 
-            xx = (4 - x) +round(self.startX + (x * self.rect[2] / 8))
-            yy = 3 + round(self.startY + (y * self.rect[3] / 8))
+            xx = (4 - x) +round(self.startX + (x * self.rect[2] / BOARD_DIMENSION))
+            yy = 3 + round(self.startY + (y * self.rect[3] / BOARD_DIMENSION))
             pygame.draw.circle(win, (0,0,255), (xx+32, yy+30), 34, 4)
-            xx1 = (4 - x) + round(self.startX + (x1 * self.rect[2] / 8))
-            yy1 = 3+ round(self.startY + (y1 * self.rect[3] / 8))
+            xx1 = (4 - x) + round(self.startX + (x1 * self.rect[2] / BOARD_DIMENSION))
+            yy1 = 3+ round(self.startY + (y1 * self.rect[3] / BOARD_DIMENSION))
             pygame.draw.circle(win, (0, 0, 255), (xx1 + 32, yy1 + 30), 34, 4)
 
         s = None
