@@ -19,6 +19,13 @@ class Board:
     startX = rect[0]
     startY = rect[1]
     def __init__(self, rows, cols):
+        """
+        Initializes the chess board with pieces and default settings.
+        
+        :param rows: The number of rows in the board.
+        :param cols: The number of columns in the board.
+        """
+    
         self.rows = rows
         self.cols = cols
 
@@ -82,12 +89,21 @@ class Board:
         self.startTime = time.time()
 
     def update_moves(self):
+        """
+        Updates the valid move lists for all pieces on the board.
+        """
         for i in range(self.rows):
             for j in range(self.cols):
                 if self.board[i][j] != 0:
                     self.board[i][j].update_valid_moves(self.board)
 
     def draw(self, win, color):
+        """
+        Draws the board and pieces on the given Pygame window.
+        
+        :param win: The Pygame surface where the board is drawn.
+        :param color: The current player's color ('w' or 'b').
+        """
         if self.last and color == self.turn:
             y, x = self.last[0]
             y1, x1 = self.last[1]
@@ -109,6 +125,12 @@ class Board:
 
 
     def get_danger_moves(self, color):
+        """
+        Retrieves a list of all squares that are threatened by the opponent.
+        
+        :param color: The color of the player ('w' or 'b').
+        :return: A list of tuples representing positions that are under attack.
+        """
         danger_moves = []
         for i in range(self.rows):
             for j in range(self.cols):
@@ -120,6 +142,12 @@ class Board:
         return danger_moves
 
     def is_checked(self, color):
+        """
+        Determines if the player's king is in check.
+        
+        :param color: The color of the player ('w' or 'b').
+        :return: True if the king is in check, False otherwise.
+        """
         self.update_moves()
         danger_moves = self.get_danger_moves(color)
         king_pos = (-1, -1)
@@ -135,6 +163,13 @@ class Board:
         return False
 
     def select(self, col, row, color):
+        """
+        Handles piece selection and movement based on user input.
+        
+        :param col: The column index of the selected piece.
+        :param row: The row index of the selected piece.
+        :param color: The color of the player making the move ('w' or 'b').
+        """
         changed = False
         prev = (-1, -1)
         for i in range(self.rows):
@@ -203,12 +238,23 @@ class Board:
                 self.reset_selected()
 
     def reset_selected(self):
+        """
+        Deselects all pieces on the board.
+        """
         for i in range(self.rows):
             for j in range(self.cols):
                 if self.board[i][j] != 0:
                     self.board[i][j].selected = False
 
     def move(self, start, end, color):
+        """
+        Moves a piece from the start position to the end position if the move is valid.
+        
+        :param start: A tuple (row, col) representing the starting position.
+        :param end: A tuple (row, col) representing the destination position.
+        :param color: The color of the player making the move ('w' or 'b').
+        :return: True if the move was successful, False otherwise.
+        """
         checkedBefore = self.is_checked(color)
         changed = True
         nBoard = self.board[:]
