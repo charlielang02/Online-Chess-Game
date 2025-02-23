@@ -43,6 +43,14 @@ class Piece:
     startY = rect[1]
 
     def __init__(self, row, col, color):
+        """
+        Initializes a chess piece with a specified position and color.
+        
+        :param row: The row position of the piece on the board.
+        :param col: The column position of the piece on the board.
+        :param color: The color of the piece ('w' for white, 'b' for black).
+        """
+        
         self.row = row
         self.col = col
         self.color = color
@@ -52,12 +60,30 @@ class Piece:
         self.pawn = False
 
     def isSelected(self):
+        """
+        Checks if the piece is selected.
+        
+        :return: True if the piece is selected, False otherwise.
+        """
         return self.selected
 
     def update_valid_moves(self, board):
+        """
+        Checks if the piece is selected.
+        
+        :return: True if the piece is selected, False otherwise.
+        """
+        
         self.move_list = self.valid_moves(board)
 
     def draw(self, win, color):
+        """
+        Draws the piece on the board.
+        
+        :param win: The Pygame window object where the piece will be drawn.
+        :param color: The color of the selected piece to highlight.
+        """
+        
         if self.color == "w":
             drawThis = W[self.img]
         else:
@@ -72,10 +98,21 @@ class Piece:
         win.blit(drawThis, (x, y))
 
     def change_pos(self, pos):
+        """
+        Changes the position of the piece on the board.
+        
+        :param pos: A tuple representing the new position (row, col) of the piece.
+        """
+        
         self.row = pos[0]
         self.col = pos[1]
 
     def __str__(self):
+        """
+        Returns the string representation of the piece's position.
+        
+        :return: A string representing the piece's column and row.
+        """
         return str(self.col) + " " + str(self.row)
 
 
@@ -83,6 +120,13 @@ class Bishop(Piece):
     img = 0
 
     def valid_moves(self, board):
+        """
+        Calculates the valid moves for a bishop piece.
+        
+        :param board: The current state of the chess board.
+        :return: A list of valid moves for the bishop as tuples of (row, col).
+        """
+        
         i = self.row
         j = self.col
 
@@ -159,10 +203,24 @@ class King(Piece):
     img = 1
 
     def __init__(self, row, col, color):
+        """
+        Initializes King piece as subclass of Piece
+
+        :param row: The row position of the piece on the board.
+        :param col: The column position of the piece on the board.
+        :param color: The color of the piece ('w' for white, 'b' for black).
+        """
+        
         super().__init__(row, col, color)
         self.king = True
 
     def valid_moves(self, board):
+        """
+        Calculates the valid moves for a king piece.
+        
+        :param board: The current state of the chess board.
+        :return: A list of valid moves for the king as tuples of (row, col).
+        """
         i = self.row
         j = self.col
 
@@ -239,6 +297,13 @@ class Knight(Piece):
     img = 2
 
     def valid_moves(self, board):
+        """
+        Calculates the valid moves for a Knight piece.
+        
+        :param board: The current state of the chess board.
+        :return: A list of valid moves for the knight as tuples of (row, col).
+        """
+        
         i = self.row
         j = self.col
 
@@ -311,12 +376,26 @@ class Pawn(Piece):
     img = 3
 
     def __init__(self, row, col, color):
+        """
+        Initializes Pawn piece as a subclass of Piece.
+        
+        :param row: The row position of the piece on the board.
+        :param col: The column position of the piece on the board.
+        :param color: The color of the piece ('w' for white, 'b' for black).
+        """
         super().__init__(row, col, color)
         self.first = True
         self.queen = False
         self.pawn = True
 
     def valid_moves(self, board):
+        """
+        Calculates the valid moves for a pawn piece.
+        
+        :param board: The current state of the chess board.
+        :return: A list of valid moves for the pawn as tuples of (row, col).
+        """
+        
         i = self.row
         j = self.col
 
@@ -387,6 +466,13 @@ class Queen(Piece):
     img = 4
 
     def valid_moves(self, board):
+        """
+        Calculates the valid moves for a Queen piece.
+        
+        :param board: The current state of the chess board.
+        :return: A list of valid moves for the Queen as tuples of (row, col).
+        """
+        
         i = self.row
         j = self.col
 
@@ -499,6 +585,13 @@ class Rook(Piece):
     img = 5
 
     def valid_moves(self, board):
+        """
+        Calculates the valid moves for a Rook piece.
+        
+        :param board: The current state of the chess board.
+        :return: A list of valid moves for the rook as tuples of (row, col).
+        """
+        
         i = self.row
         j = self.col
 
