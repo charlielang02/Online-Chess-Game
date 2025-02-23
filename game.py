@@ -41,11 +41,19 @@ import os
 import time
 from client import Network
 import pickle
+
+HEIGHT = 750
+WIDTH = 750
+X_COORDINATE = 113
+Y_COORDINATE = 113
+BOARD_WIDTH = 525
+BOARD_HEIGHT = 525
+
 pygame.font.init()
 
-board = pygame.transform.scale(pygame.image.load(os.path.join("img","board_alt.png")), (750, 750))
+board = pygame.transform.scale(pygame.image.load(os.path.join("img","board_alt.png")), (WIDTH, HEIGHT))
 chessbg = pygame.image.load(os.path.join("img", "chessbg.png"))
-rect = (113,113,525,525)
+rect = (X_COORDINATE,Y_COORDINATE,BOARD_WIDTH,BOARD_HEIGHT)
 
 turn = "w"
 
@@ -264,8 +272,6 @@ def main():
 
 
 name = input("Please type your name: ")
-width = 750
-height = 750
-win = pygame.display.set_mode((width, height))
+win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Chess Game")
 menu_screen(win, name)
