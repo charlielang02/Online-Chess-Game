@@ -2,6 +2,9 @@ import socket
 import pickle
 import time
 
+BUFFER_SIZE = 4096 * 8
+TIMEOUT_SECONDS = 5
+
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -13,7 +16,7 @@ class Network:
 
     def connect(self):
         self.client.connect(self.addr)
-        return self.client.recv(4096*8)
+        return self.client.recv(BUFFER_SIZE)
 
     def disconnect(self):
         self.client.close()
@@ -24,7 +27,7 @@ class Network:
         :return: str
         """
         start_time = time.time()
-        while time.time() - start_time < 5:
+        while time.time() - start_time < TIMEOUT_SECONDS:
             try:
                 if pick:
                     self.client.send(pickle.dumps(data))
