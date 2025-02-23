@@ -193,13 +193,12 @@ while True:
             if games[game].ready == False:
                 g=game
 
+        games[g] = Board(8,8)
         if g == -1:
             try:
                 g = list(games.keys())[-1]+1
-                games[g] = Board(8,8)
             except:
                 g = 0
-                games[g] = Board(8,8)
 
         print("[DATA] Number of Connections:", connections+1)
         print("[DATA] Number of Games:", len(games))
