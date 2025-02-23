@@ -229,6 +229,24 @@ def connect():
     n = Network()
     return n.board
 
+def send_winner(bo):
+    """
+    Sends winner to the board
+
+    :param bo: board object"
+    :return: updated board object
+    """
+    
+    if p1Time <= 0:
+        bo = n.send("winner b")
+    elif p2Time <= 0:
+        bo = n.send("winner w")
+
+    if bo.check_mate("b"):
+        bo = n.send("winner b")
+    elif bo.check_mate("w"):
+        bo = n.send("winner w")
+    return bo
 
 def main():
     """
@@ -265,16 +283,8 @@ def main():
             break
 
         if not color == "s":
-            if p1Time <= 0:
-                bo = n.send("winner b")
-            elif p2Time <= 0:
-                bo = n.send("winner w")
-
-            if bo.check_mate("b"):
-                bo = n.send("winner b")
-            elif bo.check_mate("w"):
-                bo = n.send("winner w")
-
+            bo = send_winner(bo)
+        
         if bo.winner == "w":
             end_screen(win, "White is the Winner!")
             run = False
